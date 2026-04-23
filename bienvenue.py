@@ -44,7 +44,8 @@ async def start_bienvenue(update: Update, context):
 
     menu_keyboard = [
         ["Solde", "Parrainage"],
-        ["Retrait", "Signaler"]
+        ["Retrait", "Signaler"],
+        ["Contact"]
     ]
     reply_markup = ReplyKeyboardMarkup(menu_keyboard, resize_keyboard=True)
 

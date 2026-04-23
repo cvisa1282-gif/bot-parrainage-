@@ -31,6 +31,10 @@ async def btn_retrait(update: Update, context: ContextTypes.DEFAULT_TYPE):
     from bot import retrait_start
     await retrait_start(update, context)
 
+async def btn_contact(update, context):
+    from signaler import menu_contact
+    await menu_contact(update, context)
+
 async def btn_signaler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     from signaler import menu_signaler
     await menu_signaler(update, context)
@@ -43,10 +47,12 @@ async def routeur(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await btn_parrainage(update, context)
     elif txt == "Retrait":
         await btn_retrait(update, context)
+    elif txt == "Contact":
+        await btn_contact(update, context)
     elif txt == "Signaler":
         await btn_signaler(update, context)
 
 def enregistrer_handler_menu(app):
-    pattern = r'^(Solde|Parrainage|Retrait|Signaler)$'
+    pattern = r'^(Solde|Parrainage|Retrait|Signaler|Contact)$'
     app.add_handler(MessageHandler(filters.Regex(pattern), routeur))
     print("Menu enregistre")
