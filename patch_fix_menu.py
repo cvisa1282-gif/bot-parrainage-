@@ -1,4 +1,12 @@
-import sqlite3
+# PATCH : Correction définitive des boutons Solde et Parrainage
+
+fichier = 'menu_buttons.py'
+
+with open(fichier, 'r') as f:
+    contenu = f.read()
+
+# Code de remplacement complet pour handle_menu_buttons
+nouveau_code = """import sqlite3
 
 async def cmd_solde(update, context):
     user = update.effective_user
@@ -21,7 +29,7 @@ async def cmd_parrainage(update, context):
     conn.close()
     if data:
         link = f"https://t.me/{context.bot.username}?start={data[0]}"
-        await update.message.reply_text(f"🔗 Votre lien de parrainage :\n`{link}`\n\n👥 Parrain : +300 FCFA\n🎁 Filleul : +150 FCFA", parse_mode='Markdown')
+        await update.message.reply_text(f"🔗 Votre lien de parrainage :\\n`{link}`\\n\\n👥 Parrain : +300 FCFA\\n🎁 Filleul : +150 FCFA", parse_mode='Markdown')
     else:
         await update.message.reply_text("⚠️ Utilisez /start d'abord.")
 
@@ -47,3 +55,13 @@ def enregistrer_handler_menu(app):
     from telegram.ext import MessageHandler, filters
     pattern = r'^(💰 Solde|👥 Parrainage|💳 Retrait|🚨 Signaler)$'
     app.add_handler(MessageHandler(filters.Regex(pattern), handle_menu_buttons))
+"""
+
+# Remplacer tout le contenu
+# On garde juste ce qui est après la fonction enregistrer_handler_menu
+contenu = nouveau_code
+
+with open(fichier, 'w') as f:
+    f.write(contenu)
+
+print("✅ Patch appliqué : menu_buttons.py remplacé")
