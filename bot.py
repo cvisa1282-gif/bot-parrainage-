@@ -7,7 +7,7 @@ import random
 import string
 import asyncio
 from datetime import datetime
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 
 # ==================== CONFIGURATION ====================
@@ -106,7 +106,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     user_data = create_user(user.id, user.username, user.first_name, parrain_id)
     
-    # CLAVIER PERSISTANT EN BAS
     menu_keyboard = [
         ["💰 Solde", "👥 Parrainage"],
         ["💳 Retrait"]
@@ -365,7 +364,7 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler("retrait", retrait_start)],
         states={
-            CHOIX_METHODE: [CallbackQueryHandler(choix_methode)],
+            CHOIX_METHODE: [CallbackQueryHandler(choix_methode, pattern=None)],
             SAISIE_NUMERO: [MessageHandler(filters.TEXT & ~filters.COMMAND, saisie_numero)],
             SAISIE_PAYS: [MessageHandler(filters.TEXT & ~filters.COMMAND, saisie_pays)],
             SAISIE_MONTANT: [MessageHandler(filters.TEXT & ~filters.COMMAND, saisie_montant)],
@@ -374,9 +373,7 @@ def main():
     )
     app.add_handler(conv_handler)
     
-    # Handler pour les boutons du clavier persistant
     app.add_handler(MessageHandler(filters.Regex(r'^(💰 Solde|👥 Parrainage|💳 Retrait)$'), handle_menu_buttons))
-    
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
     
     print("Bot démarré...")
