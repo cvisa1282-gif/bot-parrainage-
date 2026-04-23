@@ -4,7 +4,7 @@ from telegram.ext import CommandHandler
 
 async def start_bienvenue(update: Update, context):
     user = update.effective_user
-    
+
     text = f"""
 ✅ *Bienvenue {user.first_name} !*
 
@@ -20,11 +20,10 @@ Bonne chance ! 🍀
 
     menu_keyboard = [
         ["💰 Solde", "👥 Parrainage"],
-        ["💳 Retrait", "🚨 Signaler"],
-        ["🎰 Loterie"]
+        ["💳 Retrait", "🚨 Signaler"]
     ]
     reply_markup = ReplyKeyboardMarkup(menu_keyboard, resize_keyboard=True)
-    
+
     await update.message.reply_text(text, reply_markup=reply_markup, parse_mode='Markdown')
 
 
