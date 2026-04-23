@@ -7,6 +7,8 @@ import random
 import string
 import asyncio
 from datetime import datetime
+from threading import Thread
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 
@@ -348,8 +350,24 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("✅ Refus enregistré et utilisateur remboursé.")
         context.user_data['awaiting_refuse'] = False
 
+# ==================== FAUX SERVEUR WEB ====================
+class FakeHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running")
+    def log_message(self, format, *args):
+        pass
+
+def run_web():
+    server = HTTPServer(('0.0.0.0', 10000), FakeHandler)
+    server.serve_forever()
+
 # ==================== MAIN ====================
 def main():
+    # Démarrer le faux serveur web dans un thread séparé
+    Thread(target=run_web, daemon=True).start()
+    
     app = Application.builder().token(TOKEN).build()
     
     app.add_handler(CommandHandler("start", start))
