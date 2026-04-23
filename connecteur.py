@@ -25,8 +25,8 @@ def connecter_tout(app):
     app.add_handler(CommandHandler("reply", cmd_reply))
     
     # Module loterie
-    from loterie import enregistrer_handlers as enregistrer_loterie
-    enregistrer_loterie(app)
+    from loterie_fix import enregistrer as enregistrer_loterie
+enregistrer_loterie(app)
     
     # Module menu centralisé
     from menu_buttons import enregistrer_handler_menu
