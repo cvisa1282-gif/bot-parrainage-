@@ -29,18 +29,24 @@ async def start_bienvenue(update: Update, context):
         conn.commit()
     conn.close()
 
-    text = ("\n".join([
-        "Bienvenue " + str(user.first_name) + " !",
-        "",
-        "Solde - Consultez votre argent",
-        "Parrainage - Gagnez +300 FCFA par filleul",
-        "Retrait - Retirez des 5000 FCFA",
-        "Signaler - Signalez un probleme",
-        "",
-        "Securite active 24/7",
-        "",
-        "Bonne chance !"
-    ]))
+    text = (
+        "BIENVENUE SUR SAMS-JOB !\n\n"
+        "Gagnez de l'argent en invitant vos amis.\n\n"
+        "FONCTIONNEMENT :\n"
+        "1. Partagez votre lien de parrainage\n"
+        "2. Vos amis rejoignent le bot via votre lien\n"
+        "3. Vous gagnez 300 FCFA par filleul\n"
+        "4. Vos filleuls recoivent 150 FCFA\n"
+        "5. Retrait possible des 5000 FCFA\n\n"
+        "METHODES DE RETRAIT :\n"
+        "- Moov Money Flooz\n"
+        "- Miss by YAS\n\n"
+        "SECURITE :\n"
+        "- Anti-triche actif 24/7\n"
+        "- Comptes suspects automatiquement bloques\n"
+        "- Limite de 5 parrainages par heure\n\n"
+        "Utilisez les boutons ci-dessous pour naviguer."
+    )
 
     menu_keyboard = [
         ["Solde", "Parrainage"],
@@ -54,6 +60,3 @@ async def start_bienvenue(update: Update, context):
 
 def enregistrer(app):
     app.add_handler(CommandHandler("start", start_bienvenue))
-
-
-print("Module bienvenue pret")
